@@ -107,15 +107,7 @@ const GET_ALL_POST = async (req, res)=>{
         
         //const userInfo =  getAllPost.User.userName
         //console.log(userInfo)
-        getAllPost = getAllPost.map(e =>{
-            return{
-                postDetailes: e.postDetailes,
-                userId: e.userId,
-                userName: e.userName
-            }
-        })
-        const findByPkId = 
-        console.log(getAllPost)
+        
         res.send({
             data:getAllPost
         })
