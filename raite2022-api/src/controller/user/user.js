@@ -203,7 +203,7 @@ const ADD_COIN_TO_WATCHLIST = async (req , res)=>{
 const GET_WATCH_LIST = async (req, res)=>{
     try {
         const {id} = req.params
-        const showWatchList = await watchList.findAll({
+        let showWatchList = await watchList.findAll({
             where:{
                 userId:id
             },
@@ -212,11 +212,17 @@ const GET_WATCH_LIST = async (req, res)=>{
                 attributes:['userName']
         }
     })
+        showWatchList = showWatchList.map(e =>{
+            return{
+                coinName: e.coinName
+            }
+        })
         if(!showWatchList){
             return res.status(400).send({
                 message: error.message
             })
         }
+        
         res.send({
             message: "Success",
             data:showWatchList

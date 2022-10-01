@@ -10,5 +10,6 @@ const Post = sequelize.define("post",{
 })
 
 Post.hasMany(Comment , {onDelete:"CASCADE"} ),
-Comment.hasOne(Post , {onDelete:"CASCADE"})
+Comment.belongsTo(Post , {onDelete:"CASCADE"})
+
 module.exports = Post
