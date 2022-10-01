@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom'
 
 const registerPage = () => {
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [conPassword, setConPassword] = useState('');
@@ -50,7 +50,7 @@ const registerPage = () => {
 
 		const data = await response.json()
     console.log(data.message)
-		// navigate('/login')
+		navigate('/login')
 		
 	}
 

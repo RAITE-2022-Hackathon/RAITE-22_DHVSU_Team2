@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container'
 
 const NavigationBar = () => {
+  const navigate = useNavigate()
   const [ userName, setUserName ] = useState('')
   useEffect(()=>{
     const token = JSON.parse(localStorage.getItem('token'))
     if(token){
       setUserName(token.userName)
     }
+    
     
 
   },[])
@@ -26,6 +29,8 @@ const NavigationBar = () => {
           {userName ? 
           <Navbar.Text>
             Signed in as: <a href="#profile">{userName}</a>
+            <button  onClick={() => {localStorage.clear()
+            navigate('/landingPage')}}>Logout</button>
           </Navbar.Text> : 
           <Navbar.Text>
             <a href="/login">Login</a>

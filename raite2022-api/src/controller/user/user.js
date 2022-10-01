@@ -161,8 +161,8 @@ const FOLLOW_USER = async (req, res)=>{
     try {
         const {id} = req.params
         const {userName} = req.params
-        const currentUser = await user.findOne({where:{id}})
-        const toFollow = await user.findOne({where:{userName}})
+        const currentUser = await User.findOne({where:{id}})
+        const toFollow = await User.findOne({where:{userName}})
         currentUser.addFollower(toFollow)
         res.send({
             message:"followed"
@@ -176,7 +176,7 @@ const FOLLOW_USER = async (req, res)=>{
 
 const ADD_COIN_TO_WATCHLIST = async (req , res)=>{
     try {
-        const {userName} = req.query
+        const {userName} = req.params
         const {coinName} = req.body
         const findUser = await User.findOne({where:{userName}})
         const id = findUser.id
