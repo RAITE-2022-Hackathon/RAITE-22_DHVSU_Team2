@@ -69,7 +69,7 @@ const DELETE_POST = async (req, res)=>{
         })
     }
 }
-const GET_ALL_POST = async (req, res)=>{
+const GET_ALL_POST_FROM_USER = async (req, res)=>{
     try {
         const {userName} = req.query
         const findUser = await User.findOne({where:{userName}})
@@ -95,12 +95,38 @@ const GET_ALL_POST = async (req, res)=>{
             message: error.message
         })
     }
-    
+}
+
+const GET_ALL_POST = async (req, res)=>{
+    try {
+        let getAllPost = await Post.findAll({
+            include:{
+                model:User
+            }
+        })
+        // getAllPost = getAllPost.map(e =>{
+        //     return{
+        //         postDetailes: e.postDetailes,
+        //         userId: e.userId,
+        //     }
+        // })
+        // const findByPkId = 
+        // console.log(getAllPost)
+        res.send({
+            data:getAllPost
+        })
+    } catch (error) {
+        res.status(500).send({
+            message: error.message
+        })
+    }
     
 }
+
 module.exports = {
     CREATE_POST,
     UPDATE_POST,
     DELETE_POST,
-    GET_ALL_POST
+    GET_ALL_POST,
+    GET_ALL_POST_FROM_USER
 }
