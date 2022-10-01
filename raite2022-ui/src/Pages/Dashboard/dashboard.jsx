@@ -32,7 +32,7 @@ const dashboard = () => {
   return (
     <>
     <NavigationBar/>
-    <Container className='mx-auto'>
+    <Container className='w-75 mx-auto'>
         <CryptoList coinsData={currentData}/>
         <Paginate dataPerPage={postPerPage} totalData={coinsData.length} paginate={paginate}/>
     </Container>

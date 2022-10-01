@@ -9,6 +9,7 @@ import LoginPage from './Pages/Login Page/loginPage'
 import RegisterPage from './Pages/Register Page/registerPage'
 import Dashboard from './Pages/Dashboard/dashboard'
 import LandingPage from './Pages/Landing Page/landingPage';
+import CoinPage from './Pages/Coin Page/coinPage'
 
 function App() {
   const [ user, setUser ] =useState(localStorage.token ? localStorage.token : null)
@@ -28,6 +29,7 @@ function App() {
         
           <Routes>
             <Route path="/coins" element={<Dashboard />} />
+            <Route path="/coinPage/:id" element={<CoinPage/>}/>
           </Routes>
         
       </>
