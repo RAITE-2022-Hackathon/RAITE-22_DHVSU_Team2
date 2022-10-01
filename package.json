@@ -1,0 +1,28 @@
+{
+  "name": "raite-22_dhvsu_team2",
+  "version": "1.0.0",
+  "description": "npm run install-dev",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install-server": "cd raite2022-api && npm install",
+    "install-client": "cd raite2022-ui && npm install",
+    "server": "cd raite2022-api && npm start",
+    "client": "cd raite2022-ui && npm start",
+    "install-dev": "concurrently \"npm run install-server\" \" npm run install-client\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RAITE-2022-Hackathon/RAITE-22_DHVSU_Team2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RAITE-2022-Hackathon/RAITE-22_DHVSU_Team2/issues"
+  },
+  "homepage": "https://github.com/RAITE-2022-Hackathon/RAITE-22_DHVSU_Team2#readme",
+  "dependencies": {
+    "concurrently": "^7.4.0"
+  }
+}
