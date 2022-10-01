@@ -100,18 +100,15 @@ const GET_ALL_POST_FROM_USER = async (req, res)=>{
 const GET_ALL_POST = async (req, res)=>{
     try {
         let getAllPost = await Post.findAll({
-            include:{
-                model:User
-            }
+            include:[{
+                model:User,
+                attributes:['userName', 'firstName', 'lastName', 'birthDay' , 'email']
+            }]
         })
-        // getAllPost = getAllPost.map(e =>{
-        //     return{
-        //         postDetailes: e.postDetailes,
-        //         userId: e.userId,
-        //     }
-        // })
-        // const findByPkId = 
-        // console.log(getAllPost)
+        
+        //const userInfo =  getAllPost.User.userName
+        //console.log(userInfo)
+        
         res.send({
             data:getAllPost
         })
