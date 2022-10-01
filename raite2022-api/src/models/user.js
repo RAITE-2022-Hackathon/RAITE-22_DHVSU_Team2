@@ -31,8 +31,13 @@ const user = sequelize.define("user",{
     
 }, sequelize.sync({alter:true}))
 
-user.hasMany(Post)
-Post.belongsTo(user)
+user.hasMany(Post, {onDelete: "CASCADE"})
+Post.belongsTo(user , {onDelete: "CASCADE"})
 
+user.belongsToMany(user, {as: "User" , foreignKey: "userId", through:"Follow" , onDelete: "CASCADE", onUpdate:"Cascade"})
+user.belongsToMany(user, {as: "Followed" , foreignKey: "followId", through:"Follow", onDelete: "CASCADE", onUpdate:"Cascade"})
+
+// user.belongsToMany(user, {as: "User" , foreignKey: "userId", through:"Likes", onDelete: "CASCADE", onUpdate:"Cascade"})
+// Post.belongsToMany(Post, {as: "Post" , foreignKey: "postId", through:"Likes", onDelete: "CASCADE", onUpdate:"Cascade"})
 
 module.exports = user

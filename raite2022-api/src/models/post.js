@@ -3,7 +3,7 @@ const sequelize = require("../database/index")
 
 const Post = sequelize.define("post",{
     postDetailes:{
-        type:Datatypes.STRING,
+        type:Datatypes.TEXT,
         allowNull:true
     }
 })

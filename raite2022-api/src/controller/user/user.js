@@ -1,13 +1,19 @@
 const User = require("../../models/user")
 const userSchema = require("../../schemas/userSchema")
 const logInSchema = require("../../schemas/logInSchema")
+const user = require("../../models/user")
+const Post = require("../../models/post")
 
 
 const LOG_IN = async(req, res) =>{
     try {
         const {userName, password} = req.body
         const logInInfo = await logInSchema.validateAsync(req.body)
-        const checkUser = await User.findOne({where:{userName}})
+        const checkUser = await User.findOne({
+            include:{
+                model:Post,
+            }
+        },{where:{userName}})
         if(checkUser){
             if(password == checkUser.password ){
                 return res.send({
@@ -73,6 +79,7 @@ const SEARCH_USER_BY_NAME = async (req , res) =>{
         res.status(200).send({
             message: "Success",
             data:{
+                id: findUser.id,
                 firstName: findUser.userName,
                 lastName: findUser.lastName,
                 userName: userName,
@@ -121,10 +128,63 @@ const DELETE_USER = async (req, res) =>{
         })
     }
 }
+
+const FOLLOW_USER = async (req, res)=>{
+    try {
+        const {id} = req.params
+        const {userName} = req.params
+        const currentUser = await user.findOne({where:{id}})
+        const toFollow = await user.findOne({where:{userName}})
+        currentUser.addUser(toFollow)
+
+        res.send({
+            message:"followed"
+        }, )
+    } catch (error) {
+        res.status(500).send({
+            message: error.message
+        })
+    }
+}
+
+const UNFOLLOW_USER = async (req, res)=>{
+    try {
+        const {id} = req.params
+        const {userName} = req.params
+        const currentUser = await user.findOne({where:{id}})
+        const toUnfollow = await user.findOne({where:{userName}})
+        currentUser.removeUser(toUnfollow)
+        res.send({
+            message:"unfollow"
+        })
+    } catch (error) {
+        res.status(500).send({
+            message: error.message
+        })
+    }
+}
+
+const LIKE_POST = async (req, res)=>{
+    try {
+
+    } catch (error) {
+        
+    }
+}   
+
+const UNLIKE_POST = async (req, res)=>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}
 module.exports = {
     CREATE_USER,
     SEARCH_USER_BY_NAME,
     UPDATE_USER,
     DELETE_USER,
-    LOG_IN
+    LOG_IN,
+    FOLLOW_USER,
+    UNFOLLOW_USER
 }
