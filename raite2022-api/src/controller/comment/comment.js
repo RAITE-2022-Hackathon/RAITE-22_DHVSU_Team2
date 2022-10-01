@@ -1,33 +1,45 @@
 const Comment = require('../../models/comment')
 const Post = require ('../../models/post')
-const User = require ('../../models/User')
+const User = require ('../../models/user')
 
 
 const ADD_COMMENT = async (req , res) => {
     try {
         const {commentDetailes} = req.body
         const {id} = req.params
-        
-        let findPost = await Post.findOne({
-            where:{
-                id
-            },
+        //console.log(id)
+        const findPost = await Post.findOne({
             include:{
-                model:User,
-                attributes:['userName', 'id']
+                model:User
+            },
+            where:{
+                id:id
             }
         })
-
-        console.log(findPost.attributes)
-
-        const createComment =  await Comment.create({commentDetailes, })
-        console.log(createComment)
+        if(!findPost){
+            return res.send({
+                message: "No Post Found",
+            })
+        }
+        const userId = findPost.user.id
+        const postId = findPost.id
+        const createComment =  await Comment.create({commentDetailes, userId, postId })
+        if(!createComment){
+            return res.send({
+                message: "Cannot Create Comment",
+            })
+        }
+        //console.log(createComment)
         res.send({
             message:"Success",
-            data:createComment
+            data:{
+                postDetailes: findPost.postDetailes,
+                commentDetailes: commentDetailes,
+                userName: findPost.user.userName
+            }
         })
     } catch (error) {
-        res.status(500).send({
+        res.send({
             message: error.message
         })
     }
@@ -35,10 +47,29 @@ const ADD_COMMENT = async (req , res) => {
 }
 const UPDATE_COMMENT = async (req , res) => {
     try {
-        const {createComment} = req.body
-        const {postId} = req.query
+        const {id} = req.params
+        const commentDetailes = req.body
+
+        const findComment = await Comment.findOne({where:{id}})
+        if(!findComment){
+            return res.send({
+                message:"Comment do not exist"
+            })
+        }
+        const editComment = await Comment.update(commentDetailes, {where:{id}})
+        if(!editComment){
+            return res.send({
+                message:"Cannot Edit Comment"
+            })
+        }
+        res.send({
+            message:"Edited SuccessFully",
+            data:{
+                commentDetailes:commentDetailes
+            }
+        })
     } catch (error) {
-        res.status(500).send({
+        res.send({
             message: error.message
         })
     }
@@ -46,8 +77,23 @@ const UPDATE_COMMENT = async (req , res) => {
 }
 const DELETE_COMMENT = async (req , res) => {
     try {
-        const {createComment} = req.body
-        const {postId} = req.query
+        const {id} = req.params
+
+        const findComment = await Comment.findOne({where:{id}})
+        if(!findComment){
+            return res.send({
+                message:"Comment do not exist"
+            })
+        }
+        const editComment = await Comment.destroy({where:{id}})
+        if(!editComment){
+            return res.send({
+                message:"Cannot Edit Comment"
+            })
+        }
+        res.send({
+            message:"Deleted SuccessFully",
+        })
     } catch (error) {
         res.status(500).send({
             message: error.message

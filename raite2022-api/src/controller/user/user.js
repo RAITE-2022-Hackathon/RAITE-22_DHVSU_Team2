@@ -110,8 +110,7 @@ const SEARCH_USER_BY_NAME = async (req , res) =>{
                 
                 firstName: findUser.userName,
                 lastName: findUser.lastName,
-                userName: userName,
-                
+                userName: userName,  
             }
         })
     } catch (error) {
@@ -149,9 +148,12 @@ const DELETE_USER = async (req, res) =>{
             return res.status(400).send({message:"User Do not Exist"})
         }
         const deleteUser = await User.destroy({where:{id}})
-        res.status(200).send({message:"Successfully Deleted"})
+        if(!deleteUser){
+            return res.send({message:"Failed to Delete User"})
+        }
+        res.send({message:"Successfully Deleted"})
     } catch (error) {
-        res.status(500).send({
+        res.send({
             message: error.message
         })
     }
@@ -168,7 +170,7 @@ const FOLLOW_USER = async (req, res)=>{
             message:"followed"
         }, )
     } catch (error) {
-        res.status(500).send({
+        res.send({
             message: error.message
         })
     }
@@ -179,6 +181,11 @@ const ADD_COIN_TO_WATCHLIST = async (req , res)=>{
         const {userName} = req.params
         const {coinName} = req.body
         const findUser = await User.findOne({where:{userName}})
+        if(!findUser){
+            return res.send({
+                message:"User Do not Exists"
+            })
+        }
         const id = findUser.id
         const createInfo = {
             userId:id,
@@ -187,14 +194,14 @@ const ADD_COIN_TO_WATCHLIST = async (req , res)=>{
         const addWatchList = await watchList.create(createInfo)
         if(!addWatchList){
             return res.send({
-                message:err.message
+                message:"Coin cannot add to watchlist"
             })
         }
         res.send({
-            message:"Added coint to watchlist"
+            message:"Added coin to watchlist"
    })
     } catch (error) {
-        res.status(500).send({
+        res.send({
             message: error.message
         })
     }
@@ -209,20 +216,20 @@ const GET_WATCH_LIST = async (req, res)=>{
             },
             include:{
                 model:User,
-                attributes:['userName']
+                
         }
     })
-        showWatchList = showWatchList.map(e =>{
-            return{
-                coinName: e.coinName
-            }
-        })
-        if(!showWatchList){
-            return res.status(400).send({
-                message: error.message
+        if(showWatchList == 0){
+            return res.send({
+                message:"Doesnt have any watchlist"
             })
         }
-        
+        showWatchList = showWatchList.map(e =>{
+            return{
+                coinName: e.coinName,
+                userName: e.user.userName
+            }
+        })
         res.send({
             message: "Success",
             data:showWatchList

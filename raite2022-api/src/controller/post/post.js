@@ -24,7 +24,10 @@ const CREATE_POST = async (req, res)=>{
             })
         }
         res.send({
-             message:"success in creating post"
+             message:"success in creating post",
+             data:{
+                postDetailes: postDetailes
+             }
     })
     } catch (error) {
         res.status(500).send({
@@ -69,10 +72,16 @@ const DELETE_POST = async (req, res)=>{
         })
     }
 }
+
 const GET_ALL_POST_FROM_USER = async (req, res)=>{
     try {
-        const {userName} = req.params
-        const findUser = await User.findOne({where:{userName}})
+        const {id} = req.params
+        const findUser = await User.findOne({where:{id}})
+        if(!findUser){
+            return res.send({
+                message:"User do not exist"
+            })
+        }
         let showAllPost = await Post.findAll({
             include:{
                 model:User,
@@ -81,9 +90,16 @@ const GET_ALL_POST_FROM_USER = async (req, res)=>{
                 userId:findUser.id
             }
         })
+        console.log(showAllPost)
+        if(showAllPost == 0){
+            return res.send({
+                message:"User haven't post anything yet"
+            })
+        }
         showAllPost = showAllPost.map(e => {
             return{
                 postDetailes: e.postDetailes,
+                userName: e.user.userName
             }
         })
         res.send({
@@ -105,10 +121,8 @@ const GET_ALL_POST = async (req, res)=>{
                 attributes:['userName', 'firstName', 'lastName', 'birthDay' , 'email']
             }]
         })
-        
         //const userInfo =  getAllPost.User.userName
         //console.log(userInfo)
-        
         res.send({
             data:getAllPost
         })
