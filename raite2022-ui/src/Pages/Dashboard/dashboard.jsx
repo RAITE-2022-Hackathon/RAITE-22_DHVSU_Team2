@@ -5,6 +5,8 @@ import getCoins from '../../utils/getCoins'
 
 import Container from 'react-bootstrap/esm/Container'
 
+//Components
+import NavigationBar from '../../Components/NavigationBar';
 import CryptoList from '../../Components/CryptoList'
 import Paginate from '../../Components/Paginate'
 
@@ -26,11 +28,15 @@ const dashboard = () => {
     const paginate = (pageNumber) =>{
         SetCurrentPage(pageNumber)
       }
+
   return (
+    <>
+    <NavigationBar/>
     <Container className='mx-auto'>
         <CryptoList coinsData={currentData}/>
         <Paginate dataPerPage={postPerPage} totalData={coinsData.length} paginate={paginate}/>
     </Container>
+    </>
   )
   
 }

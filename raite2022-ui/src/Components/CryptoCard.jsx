@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card';
 
 const CryptoCard = ({image, name, price}) => {
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: '10rem' }}>
       <Card.Img variant="top" src={image} />
       <Card.Body>
         <Card.Title>{name}</Card.Title>

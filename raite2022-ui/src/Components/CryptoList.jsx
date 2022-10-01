@@ -1,9 +1,11 @@
 import React from 'react'
 import CryptoCard from './CryptoCard'
 
+import Container from 'react-bootstrap/esm/Container'
+
 const CryptoList = ({coinsData}) => {
   return (
-    <div>
+    <Container className='mx-auto'>
       {coinsData.map((coin, index) => {
         return(<CryptoCard
           key={index}
@@ -11,7 +13,7 @@ const CryptoList = ({coinsData}) => {
           name={coin.name}
           price={coin.current_price}/>)
       })}
-    </div>
+    </Container>
   )
 }
 
