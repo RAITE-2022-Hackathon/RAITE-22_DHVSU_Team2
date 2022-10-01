@@ -19,9 +19,11 @@ const LOG_IN = async(req, res) =>{
                 return res.send({
                     message:"Successfully Login",
                     data:{
+                        id: findUser.id,
                         firstName: checkUser.firstName,
                         lastName: checkUser.lastName,
-                        userName: checkUser.userName
+                        userName: checkUser.userName,
+                        password: findUser.password
                     }
                 })
             }else{
@@ -79,11 +81,11 @@ const SEARCH_USER_BY_NAME = async (req , res) =>{
         res.status(200).send({
             message: "Success",
             data:{
-                id: findUser.id,
+                
                 firstName: findUser.userName,
                 lastName: findUser.lastName,
                 userName: userName,
-                password: findUser.password
+                
             }
         })
     } catch (error) {
