@@ -34,7 +34,7 @@ const CREATE_POST = async (req, res)=>{
 }
 const UPDATE_POST = async (req, res)=>{
     try {
-        const {id} = req.query
+        const {id} = req.params
         const updateInfo = req.body
         const updatePost = await Post.update(updateInfo,{where:{id}})
         if(!updatePost){
@@ -53,7 +53,7 @@ const UPDATE_POST = async (req, res)=>{
 }
 const DELETE_POST = async (req, res)=>{
     try {
-        const {id} = req.query
+        const {id} = req.params
         const deletePost = await Post.destroy({where:{id}})
         if(!deletePost){
             return res.send({
@@ -71,7 +71,7 @@ const DELETE_POST = async (req, res)=>{
 }
 const GET_ALL_POST_FROM_USER = async (req, res)=>{
     try {
-        const {userName} = req.query
+        const {userName} = req.params
         const findUser = await User.findOne({where:{userName}})
         let showAllPost = await Post.findAll({
             include:{

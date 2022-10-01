@@ -6,15 +6,25 @@ const User = require ('../../models/User')
 const ADD_COMMENT = async (req , res) => {
     try {
         const {commentDetailes} = req.body
-        const {postId} = req.params
-        const {userName} = req.params
+        const {id} = req.params
+        
+        let findPost = await Post.findOne({
+            where:{
+                id
+            },
+            include:{
+                model:User,
+                attributes:['userName', 'id']
+            }
+        })
 
-        const findUser = await User.findOne({where:{userName}})
-        const userId = findUser.id
-        const createComment = Comment.create({postId , commentDetailes , userId})
+        console.log(findPost.attributes)
+
+        const createComment =  await Comment.create({commentDetailes, })
+        console.log(createComment)
         res.send({
             message:"Success",
-            data:commentDetailes
+            data:createComment
         })
     } catch (error) {
         res.status(500).send({
