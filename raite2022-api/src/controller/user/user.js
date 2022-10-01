@@ -1,9 +1,9 @@
 const User = require("../../models/user")
 const userSchema = require("../../schemas/userSchema")
 const logInSchema = require("../../schemas/logInSchema")
-const user = require("../../models/user")
 const Post = require("../../models/post")
 const Follow = require("../../models/Follow")
+const watchList = require("../../models/watchlist")
 
 
 const LOG_IN = async(req, res) =>{
@@ -11,11 +11,35 @@ const LOG_IN = async(req, res) =>{
         const {userName, password} = req.body
         const logInInfo = await logInSchema.validateAsync(req.body)
         const checkUser = await User.findOne({
-            include:{
-                model:Post,
-                model:Follow
+            where:{
+                userName
+            },
+            
+        })
+        let follow = await Follow.findAll({where:{userId:checkUser.id}})
+        follow = follow.map(e =>{
+            return{
+                followId: e.followId
             }
-        },{where:{userName}})
+        })
+
+        const followedId = follow
+        console.log(followedId)
+        const findUserWithFollowId = await User.findOne({where:{id:followedId}})
+        console.log(findUserWithFollowId)
+        // let findPost = await User.findAll({
+        //     where:{
+        //         id:followedId
+        //     }
+        // })
+        
+        // findPost = findPost.map(e =>{
+        //     return{
+        //         userName: e.findPost,
+        //         postDetaitles:e.postDetaitles
+        //     }
+        // })
+        //console.log(findPost)
         if(checkUser){
             if(password == checkUser.password ){
                 return res.send({
@@ -25,7 +49,8 @@ const LOG_IN = async(req, res) =>{
                         firstName: checkUser.firstName,
                         lastName: checkUser.lastName,
                         userName: checkUser.userName,
-                        password: checkUser.password
+                        password: checkUser.password,
+                        //followUser:findPost
                     }
                 })
             }else{
@@ -139,11 +164,36 @@ const FOLLOW_USER = async (req, res)=>{
         const {userName} = req.params
         const currentUser = await user.findOne({where:{id}})
         const toFollow = await user.findOne({where:{userName}})
-        currentUser.addUser(toFollow)
-
+        currentUser.addFollower(toFollow)
         res.send({
             message:"followed"
         }, )
+    } catch (error) {
+        res.status(500).send({
+            message: error.message
+        })
+    }
+}
+
+const ADD_COIN_TO_WATCHLIST = async (req , res)=>{
+    try {
+        const {userName} = req.query
+        const {coinName} = req.body
+        const findUser = await User.findOne({where:{userName}})
+        const id = findUser.id
+        const createInfo = {
+            userId:id,
+            coinName:coinName
+        }
+        const addWatchList = await watchList.create(createInfo)
+        if(!addWatchList){
+            return res.send({
+                message:err.message
+            })
+        }
+        res.send({
+            message:"Added coint to watchlist"
+   })
     } catch (error) {
         res.status(500).send({
             message: error.message
@@ -190,5 +240,6 @@ module.exports = {
     DELETE_USER,
     LOG_IN,
     FOLLOW_USER,
-    UNFOLLOW_USER
+    UNFOLLOW_USER,
+    ADD_COIN_TO_WATCHLIST
 }

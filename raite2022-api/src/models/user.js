@@ -1,6 +1,8 @@
 const Datatypes = require('sequelize')
 const sequelize = require("../database/index")
 const Post = require("./post")
+const Follow = require("./follow")
+const watchList = require("./watchlist")
 
 const user = sequelize.define("user",{
     
@@ -34,8 +36,11 @@ const user = sequelize.define("user",{
 user.hasMany(Post, {onDelete: "CASCADE"})
 Post.belongsTo(user , {onDelete: "CASCADE"})
 
-user.belongsToMany(user, {as: "User" , foreignKey: "userId", through:"Follow" , onDelete: "CASCADE", onUpdate:"Cascade"})
-user.belongsToMany(user, {as: "Followed" , foreignKey: "followId", through:"Follow", onDelete: "CASCADE", onUpdate:"Cascade"})
+user.hasMany(watchList ,{onDelete:"CASCADE"})
+watchList.belongsTo(user ,{onDelete:"CASCADE"})
+
+user.belongsToMany(user, {as: "Follower" , foreignKey: "userId", through: Follow , onDelete: "CASCADE", onUpdate:"Cascade"})
+user.belongsToMany(user, {as: "Followed" , foreignKey: "followId", through: Follow , onDelete: "CASCADE", onUpdate:"Cascade"})
 
 // user.belongsToMany(user, {as: "User" , foreignKey: "userId", through:"Likes", onDelete: "CASCADE", onUpdate:"Cascade"})
 // Post.belongsToMany(Post, {as: "Post" , foreignKey: "postId", through:"Likes", onDelete: "CASCADE", onUpdate:"Cascade"})
