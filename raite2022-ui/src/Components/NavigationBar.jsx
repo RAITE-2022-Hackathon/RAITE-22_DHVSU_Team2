@@ -18,9 +18,9 @@ const NavigationBar = () => {
       <Container>
         <Navbar.Brand href="#home">Navbar</Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <Nav.Link href="/home">Home</Nav.Link>
+          <Nav.Link href="/coins">Coins</Nav.Link>
+          <Nav.Link href="/watchlist">Watchlist</Nav.Link>
         </Nav>
         <Navbar.Collapse className="justify-content-end">
           {userName ? 

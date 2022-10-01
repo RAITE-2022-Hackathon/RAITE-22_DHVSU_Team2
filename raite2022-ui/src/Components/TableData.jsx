@@ -8,21 +8,21 @@ const TableData = ({data}) => {
         <Table striped bordered hover size="sm" >
           <thead>
             <tr>
-              <th scope="col">Atomic Number</th>
-              <th scope="col">Name</th>
-              <th scope="col">Category</th>
-              <th scope="col">Atomic Mass</th>
+              <th scope="col">Rank</th>
+              <th scope="col">Coin</th>
+              <th scope="col">Price</th>
+              <th scope="col">Market Cap</th>
             </tr>
           </thead>
           <tbody>
             {
-              data.map((element,index)=>{
+              data.map((data,index)=>{
                 return(
-                  <tr key={index}>
-                    <th scope="row">{element.number}</th>
-                    <td>{element.name}</td>
-                    <td>{element.category}</td>
-                    <td>{element.atomic_mass}</td>
+                  <tr key={index}  >
+                    <th scope="row">{data.market_cap_rank}<a  href={`coinPage/${data.id}`}><img src={data.image} width='60px'/></a></th>
+                    <td> {data.name}</td>
+                    <td>{data.current_price}</td>
+                    <td>{data.market_cap}</td>
                   </tr>
                 )
               })

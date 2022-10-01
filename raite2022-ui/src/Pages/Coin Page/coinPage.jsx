@@ -24,7 +24,7 @@ const coinPage = ({}) => {
             setName(data.name)
             setImage(data.image.thumb)
             console.log(data.image)
-            setPrice(data.price)
+            setPrice(data.market_data.current_price.usd)
         })()
     },[])
   return (
@@ -35,12 +35,12 @@ const coinPage = ({}) => {
       <Card.Body>
         <Card.Title>{name}</Card.Title>
         <Card.Text>
-          Price: {price}
+          Price: {price} $
         </Card.Text>
       </Card.Body>
     </Card>
     <Button variant="dark">Follow</Button>
-        <p>{description}</p>
+    <p className='mt-6 text-gray-500 [&>a]:text-blue-600 [&>a]:underline' dangerouslySetInnerHTML={{ __html: description }}></p>
     </Container>
   )
 }

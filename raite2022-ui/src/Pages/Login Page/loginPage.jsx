@@ -36,9 +36,11 @@ const loginPage = ({setUser}) => {
 
 		const data = await response.json()
     const token = JSON.stringify(data.data)
+    console.log(token)
     localStorage.setItem('token',token)
-    navigate('/coins')
     setUser(localStorage.token)
+    navigate('/home')
+    
     // console.log(localStorage.token)
 		// navigate('/login')
 		

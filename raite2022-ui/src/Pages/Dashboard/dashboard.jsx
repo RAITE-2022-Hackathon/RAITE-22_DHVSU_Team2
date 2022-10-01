@@ -9,6 +9,7 @@ import Container from 'react-bootstrap/esm/Container'
 import NavigationBar from '../../Components/NavigationBar';
 import CryptoList from '../../Components/CryptoList'
 import Paginate from '../../Components/Paginate'
+import TableData from '../../Components/TableData';
 
 const dashboard = () => {
     const [ coinsData, setCoinsData ] = useState([])
@@ -27,14 +28,16 @@ const dashboard = () => {
     const currentData = coinsData.slice(indexOfFirstData, indexOfLastData)
     const paginate = (pageNumber) =>{
         SetCurrentPage(pageNumber)
-      }
+    }
 
   return (
     <>
     <NavigationBar/>
     <Container className='w-75 mx-auto'>
-        <CryptoList coinsData={currentData}/>
+        {/* <CryptoList coinsData={currentData}/> */}
+        <TableData data={currentData}/>
         <Paginate dataPerPage={postPerPage} totalData={coinsData.length} paginate={paginate}/>
+        
     </Container>
     </>
   )
