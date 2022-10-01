@@ -2,10 +2,10 @@ const express = require("express")
 const router = express.Router()
 const POST_CONTROLLER = require("../../controller/post/post")
 
-router.post("/create-post/:id", POST_CONTROLLER.CREATE_POST)
-// router.post("/create-user", USER_CONTROLLER.CREATE_USER)
-// router.post("/search-user-by-name/:userName", USER_CONTROLLER.SEARCH_USER_BY_NAME)
-// router.put("/update-user/:id", USER_CONTROLLER.UPDATE_USER)
-// router.delete("/delete-user/:id", USER_CONTROLLER.DELETE_USER)
+router.post("/create-post", POST_CONTROLLER.CREATE_POST)
+router.get("/get-all-post", POST_CONTROLLER.GET_ALL_POST)
+router.put("/update-post", POST_CONTROLLER.UPDATE_POST)
+router.delete("/delete-post", POST_CONTROLLER.DELETE_POST)
+
 
 module.exports = router

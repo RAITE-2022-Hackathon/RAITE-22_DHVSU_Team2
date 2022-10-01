@@ -31,8 +31,8 @@ const user = sequelize.define("user",{
     
 }, sequelize.sync({alter:true}))
 
-user.hasMany(Post)
-Post.belongsTo(user)
+user.hasMany(Post, {onDelete: "CASCADE"})
+Post.belongsTo(user , {onDelete: "CASCADE"})
 
 
 module.exports = user

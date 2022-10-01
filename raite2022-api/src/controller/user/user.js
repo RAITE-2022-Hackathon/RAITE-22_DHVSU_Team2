@@ -121,10 +121,15 @@ const DELETE_USER = async (req, res) =>{
         })
     }
 }
+
+const FOLLOW_USER = async (req, res)=>{
+
+}
 module.exports = {
     CREATE_USER,
     SEARCH_USER_BY_NAME,
     UPDATE_USER,
     DELETE_USER,
-    LOG_IN
+    LOG_IN,
+    FOLLOW_USER
 }
