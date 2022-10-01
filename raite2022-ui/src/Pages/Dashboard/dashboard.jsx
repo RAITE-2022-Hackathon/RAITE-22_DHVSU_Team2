@@ -21,6 +21,7 @@ const dashboard = () => {
             const data = await getCoins()
             setCoinsData(data)
         })()
+        console.log(coinsData)
     },[])
 
     const indexOfLastData = currentPage * postPerPage

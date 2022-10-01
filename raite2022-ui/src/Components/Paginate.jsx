@@ -13,8 +13,8 @@ const Paginate= ({ dataPerPage, totalData, paginate}) => {
   return (
     
     <Pagination className='mx-auto'>
-        {pageNumbers.map((number) => {
-            return(<Pagination.Item onClick={() => paginate(number)}>{number}</Pagination.Item>)
+        {pageNumbers.map((number,index) => {
+            return(<Pagination.Item key={index} onClick={() => paginate(number)}>{number}</Pagination.Item>)
         })}
     </Pagination>
   )
