@@ -15,17 +15,17 @@ const LOG_IN = async(req, res) =>{
                 userName
             },
         })
-        // let follow = await Follow.findAll({where:{userId:checkUser.id}})
-        // follow = follow.map(e =>{
-        //     return{
-        //         followId: e.followId
-        //     }
-        // })
+        let follow = await Follow.findAll({where:{userId:checkUser.id}})
+        follow = follow.map(e =>{
+            return{
+                followId: e.followId
+            }
+        })
 
-        //const followedId = follow
-        // console.log(followedId)
-        // const findUserWithFollowId = await User.findOne({where:{id:followedId}})
-        // console.log(findUserWithFollowId)
+        const followedId = follow
+        console.log(followedId)
+        const findUserWithFollowId = await User.findOne({where:{id:followedId}})
+        console.log(findUserWithFollowId)
         // let findPost = await User.findAll({
         //     where:{
         //         id:followedId

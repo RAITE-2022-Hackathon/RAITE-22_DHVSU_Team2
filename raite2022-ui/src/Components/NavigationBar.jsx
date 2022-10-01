@@ -7,10 +7,12 @@ import Container from 'react-bootstrap/Container'
 const NavigationBar = () => {
   const navigate = useNavigate()
   const [ userName, setUserName ] = useState('')
+  const [ id, setId ] = useState()
   useEffect(()=>{
     const token = JSON.parse(localStorage.getItem('token'))
     if(token){
       setUserName(token.userName)
+      setId(token.id)
     }
     
     
@@ -23,14 +25,14 @@ const NavigationBar = () => {
         <Nav className="me-auto">
           <Nav.Link href="/home">Home</Nav.Link>
           <Nav.Link href="/coins">Coins</Nav.Link>
-          <Nav.Link href="/watchlist">Watchlist</Nav.Link>
+          <Nav.Link href={`/watchlist/${id}`}>Watchlist</Nav.Link>
         </Nav>
         <Navbar.Collapse className="justify-content-end">
           {userName ? 
           <Navbar.Text>
             Signed in as: <a href="#profile">{userName}</a>
             <button  onClick={() => {localStorage.clear()
-            navigate('/landingPage')}}>Logout</button>
+            navigate('*')}}>Logout</button>
           </Navbar.Text> : 
           <Navbar.Text>
             <a href="/login">Login</a>
