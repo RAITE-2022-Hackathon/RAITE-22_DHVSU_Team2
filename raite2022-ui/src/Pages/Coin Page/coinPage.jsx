@@ -6,8 +6,10 @@ import Container from 'react-bootstrap/esm/Container'
 import Card from 'react-bootstrap/Card';
 
 import singleCoin from '../../utils/singleCoin'
+import addCoinToWatchlist from '../../utils/addCoinToWatchlist';
 
 import HistoricalChart from '../../Components/HistoricalChart';
+
 
 
 const coinPage = ({}) => {
@@ -16,8 +18,14 @@ const coinPage = ({}) => {
     const [ image, setImage ] = useState('')
     const [ price, setPrice ] = useState(0)
     const [ description, setDiscription ] = useState('')
-
+    const [ userName, setUserName ] = useState('')
+    const [ follow, setFollow ] = useState(false)
     useEffect(()=> {
+
+      const token = JSON.parse(localStorage.getItem('token'))
+      if(token){
+      setUserName(token.userName)
+      }
         (async () => {
             const data = await singleCoin(id)
             setDiscription(data.description.en)
@@ -27,6 +35,13 @@ const coinPage = ({}) => {
             setPrice(data.market_data.current_price.usd)
         })()
     },[])
+
+    const pushFunction = (userName, name) =>{
+      addCoinToWatchlist(userName, name)
+    }
+    // useEffect(()=>{
+    //   addCoinToWatchlist(userName, name)
+    // },[follow])
   return (
     <Container>
         <HistoricalChart id={id}/>
@@ -39,7 +54,7 @@ const coinPage = ({}) => {
         </Card.Text>
       </Card.Body>
     </Card>
-    <Button variant="dark">Follow</Button>
+    <button  onClick={() => pushFunction(userName, name)}> Follow </button>
     <p className='mt-6 text-gray-500 [&>a]:text-blue-600 [&>a]:underline' dangerouslySetInnerHTML={{ __html: description }}></p>
     </Container>
   )
