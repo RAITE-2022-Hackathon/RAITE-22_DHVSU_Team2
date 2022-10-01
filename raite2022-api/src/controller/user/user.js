@@ -200,6 +200,33 @@ const ADD_COIN_TO_WATCHLIST = async (req , res)=>{
     }
 }
 
+const GET_WATCH_LIST = async (req, res)=>{
+    try {
+        const {id} = req.query
+        const showWatchList = await watchList.findAll({
+            where:{
+                userId:id
+            },
+            include:{
+                model:User
+        }
+    })
+        if(!showWatchList){
+            return res.status(400).send({
+                message: error.message
+            })
+        }
+        res.send({
+            message: "Success",
+            data:showWatchList
+        })
+    } catch (error) {
+        res.status(500).send({
+            message: error.message
+        })
+    }
+}
+
 const UNFOLLOW_USER = async (req, res)=>{
     try {
         const {id} = req.params
@@ -240,5 +267,6 @@ module.exports = {
     LOG_IN,
     FOLLOW_USER,
     UNFOLLOW_USER,
-    ADD_COIN_TO_WATCHLIST
+    ADD_COIN_TO_WATCHLIST,
+    GET_WATCH_LIST
 }

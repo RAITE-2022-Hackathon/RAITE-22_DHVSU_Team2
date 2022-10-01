@@ -10,6 +10,7 @@ router.delete("/delete-user/:id", USER_CONTROLLER.DELETE_USER)
 router.post("/follow/:id/:userName", USER_CONTROLLER.FOLLOW_USER)
 router.post("/unfollow/:id/:userName", USER_CONTROLLER.UNFOLLOW_USER)
 router.post("/add-coin-to-watchlist", USER_CONTROLLER.ADD_COIN_TO_WATCHLIST)
+router.get("/get-watchlist", USER_CONTROLLER.GET_WATCH_LIST)
 
 
 module.exports = router
