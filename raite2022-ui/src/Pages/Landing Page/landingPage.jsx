@@ -14,6 +14,7 @@ const landingPage = () => {
   const [ data, setData ] = useState([])
   const [ currentPage, setCurrentPage ] = useState(1)
   const [ dataPerPage, setDataPerPage] = useState(10)
+  
   useEffect(()=>{
     setData(periodicTable)
   },[])
