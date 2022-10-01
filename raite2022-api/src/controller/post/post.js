@@ -101,7 +101,8 @@ const GET_ALL_POST = async (req, res)=>{
     try {
         let getAllPost = await Post.findAll({
             include:[{
-                model:User , as: 'user'
+                model:User,
+                attributes:['userName', 'firstName', 'lastName', 'birthDay' , 'email']
             }]
         })
         

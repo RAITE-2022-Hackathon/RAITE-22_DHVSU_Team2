@@ -208,7 +208,8 @@ const GET_WATCH_LIST = async (req, res)=>{
                 userId:id
             },
             include:{
-                model:User
+                model:User,
+                attributes:['userName']
         }
     })
         if(!showWatchList){
