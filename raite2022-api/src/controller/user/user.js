@@ -3,6 +3,7 @@ const userSchema = require("../../schemas/userSchema")
 const logInSchema = require("../../schemas/logInSchema")
 const user = require("../../models/user")
 const Post = require("../../models/post")
+const Follow = require("../../models/Follow")
 
 
 const LOG_IN = async(req, res) =>{
@@ -12,6 +13,7 @@ const LOG_IN = async(req, res) =>{
         const checkUser = await User.findOne({
             include:{
                 model:Post,
+                model:Follow
             }
         },{where:{userName}})
         if(checkUser){
@@ -19,11 +21,11 @@ const LOG_IN = async(req, res) =>{
                 return res.send({
                     message:"Successfully Login",
                     data:{
-                        id: findUser.id,
+                        id: checkUser.id,
                         firstName: checkUser.firstName,
                         lastName: checkUser.lastName,
                         userName: checkUser.userName,
-                        password: findUser.password
+                        password: checkUser.password
                     }
                 })
             }else{
