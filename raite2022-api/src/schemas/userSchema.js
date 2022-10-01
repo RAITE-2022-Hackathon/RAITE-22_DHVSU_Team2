@@ -6,6 +6,7 @@ const userSchema = joi.object({
     userName: joi.string().required().min(4).max(16),
     password: joi.string().required().min(4).max(16),
     birthDay: joi.string().required(),
+    email: joi.string().required(),
 })
 
 module.exports = userSchema

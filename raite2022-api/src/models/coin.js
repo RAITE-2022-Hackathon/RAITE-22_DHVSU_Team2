@@ -7,6 +7,6 @@ const coin = sequelize.define("product", {
         allownull: false,
     },
 
-} , sequelize.sync({alter:true}))
+})
 
 module.exports = coin

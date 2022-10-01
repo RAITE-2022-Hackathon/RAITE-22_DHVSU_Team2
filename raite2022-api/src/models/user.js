@@ -1,6 +1,6 @@
 const Datatypes = require('sequelize')
 const sequelize = require("../database/index")
-//const Post = require("./post")
+const Post = require("./post")
 
 const user = sequelize.define("user",{
     
@@ -23,11 +23,16 @@ const user = sequelize.define("user",{
     birthDay:{
         type:Datatypes.STRING,
         allowNull:true
+    },
+    email:{
+        type:Datatypes.STRING,
+        allowNull:false
     }
     
 }, sequelize.sync({alter:true}))
 
-//Post.belongsTo(user)
-//user.hasMany(Post)
+user.hasMany(Post)
+Post.belongsTo(user)
+
 
 module.exports = user
