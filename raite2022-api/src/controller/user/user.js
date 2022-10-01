@@ -14,7 +14,6 @@ const LOG_IN = async(req, res) =>{
             where:{
                 userName
             },
-            
         })
         let follow = await Follow.findAll({where:{userId:checkUser.id}})
         follow = follow.map(e =>{
