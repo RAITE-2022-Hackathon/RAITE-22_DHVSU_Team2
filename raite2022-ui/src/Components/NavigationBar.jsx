@@ -3,8 +3,16 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container'
 
-const NavigationBar = ({user}) => {
+const NavigationBar = () => {
+  const [ userName, setUserName ] = useState('')
+  useEffect(()=>{
+    const token = JSON.parse(localStorage.getItem('token'))
+    if(token){
+      setUserName(token.userName)
+    }
+    
 
+  },[])
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
@@ -15,12 +23,12 @@ const NavigationBar = ({user}) => {
           <Nav.Link href="#pricing">Pricing</Nav.Link>
         </Nav>
         <Navbar.Collapse className="justify-content-end">
-          {user ? 
+          {userName ? 
           <Navbar.Text>
-            Signed in as: <a href="#profile">{user.username}</a>
+            Signed in as: <a href="#profile">{userName}</a>
           </Navbar.Text> : 
           <Navbar.Text>
-            <a href="#login">Login</a>
+            <a href="/login">Login</a>
           </Navbar.Text>}
         </Navbar.Collapse>
       </Container>

@@ -1,23 +1,43 @@
 import React, { useState, UseEffect } from 'react';
+import { Routes, Route } from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-//Components
-import NavigationBar from './Components/NavigationBar';
+
 
 //Pages
 import LoginPage from './Pages/Login Page/loginPage'
-import LandingPage from './Pages/Landing Page/landingPage'
 import RegisterPage from './Pages/Register Page/registerPage'
 import Dashboard from './Pages/Dashboard/dashboard'
+import LandingPage from './Pages/Landing Page/landingPage';
 
 function App() {
-  const [ user, setUser ] = useState(localStorage.getItem('token'))
+  const [ user, setUser ] =useState(localStorage.token ? localStorage.token : null)
   return (
-    <>
-    <NavigationBar user={user}/>
+    <div>
+    
+      {!user && 
+      <Routes>
+        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/login" element={<LoginPage setUser={setUser}/>} />
+        <Route path="*" element={<LandingPage/>} />
+        <Route path="/" element={<LandingPage/>} />
+      </Routes>
+      }
+      {user && 
+      <>
+        
+          <Routes>
+            <Route path="/coins" element={<Dashboard />} />
+          </Routes>
+        
+      </>
+      }
     {/* <Dashboard/> */}
-    <RegisterPage/>
-    </>
+    {/* <RegisterPage/> */}
+    {/* <LoginPage setUser={setUser}/> */}
+    
+    
+    </div>
   );
 }
 
