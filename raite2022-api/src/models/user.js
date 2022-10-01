@@ -3,6 +3,7 @@ const sequelize = require("../database/index")
 const Post = require("./post")
 const Follow = require("./follow")
 const watchList = require("./watchlist")
+const Comment = require('./comment')
 
 const user = sequelize.define("user",{
     
@@ -31,13 +32,16 @@ const user = sequelize.define("user",{
         allowNull:false
     }
     
-}, sequelize.sync({alter:true}))
+})
 
 user.hasMany(Post, {onDelete: "CASCADE"})
 Post.belongsTo(user , {onDelete: "CASCADE"})
 
 user.hasMany(watchList ,{onDelete:"CASCADE"})
 watchList.belongsTo(user ,{onDelete:"CASCADE"})
+
+user.hasMany(Comment, {onDelete:"CASCADE"})
+Comment.belongsTo(user, {onDelete:"CASCADE"})
 
 user.belongsToMany(user, {as: "Follower" , foreignKey: "userId", through: Follow , onDelete: "CASCADE", onUpdate:"Cascade"})
 user.belongsToMany(user, {as: "Followed" , foreignKey: "followId", through: Follow , onDelete: "CASCADE", onUpdate:"Cascade"})
