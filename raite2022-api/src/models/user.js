@@ -18,6 +18,7 @@ const user = sequelize.define("user",{
         type:Datatypes.STRING,
         allowNull:false
     },
+    
 }, sequelize.sync({alter:true}))
 
 
