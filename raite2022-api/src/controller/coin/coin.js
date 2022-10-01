@@ -1,20 +1,19 @@
-const Product = require("../../models/product")
+const Coin = require("../../models/coin")
 const productSchema = require("../../schemas/productSchema")
 
 
 //queing , delivery, reservation
-const ADD_PRODUCT = async (req, res) =>{
+const ADD_COIN = async (req, res) =>{
     try {
-        const productInfo = await productSchema.validateAsync(req.body)
-        const {productName} = req.body
-        const checkProductName = await Product.findOne({where:{productName}})
-        if(checkProductName){
+        const {coinName} = req.body
+        const checKCoinName = await Coin.findOne({where:{coinName}})
+        if(checKCoinName){
             return res.status(400).send({
-                message:"Product Already Exist"
+                message:"Coin Already Exist"
             })
         }
-        const createProduct = await Product.create(productInfo)
-        if(!createProduct){
+        const createCoin = await Coin.create(coinName)
+        if(!createCoin){
             return res.status(400).send({
                 message:"Failed to Add Product"
             })
@@ -32,7 +31,7 @@ const ADD_PRODUCT = async (req, res) =>{
 const DELETE_PRODUCT = async (req, res) =>{
     try {
         const {id} = req.params
-        const findProductByPk = await Product.findByPk(id)
+        const findProductByPk = await Coin.findByPk(id)
         if(!findProductByPk){
             return res.status(400).send({message:"Product do not exist"})
         }
@@ -52,7 +51,7 @@ const UPDATE_PRODUCT = async (req, res) =>{
     try {
         const {id} = req.params
         const updateInfo = req.body
-        const findProductById = await Product.findByPk(id)
+        const findProductById = await Coin.findByPk(id)
         if(!findProductById){
             return res.status(400).send({message:"Product Do Not Exist"})
         }
@@ -74,7 +73,7 @@ const UPDATE_PRODUCT = async (req, res) =>{
 const SEARCH_PRODUCT_BY_NAME = async (req, res) =>{
     try {
         const {productName} = req.params
-        const findProduct = await Product.findOne({where:{productName}})
+        const findProduct = await Coin.findOne({where:{productName}})
         if(!findProduct){
             return res.status(400).send({
                 message: "Product Do Not Exist"
@@ -97,7 +96,7 @@ const SEARCH_PRODUCT_BY_NAME = async (req, res) =>{
 
 const GET_ALL_PRODUCT = async (req, res) =>{
     try {
-        let getAllProduct = await Product.findAll()
+        let getAllProduct = await Coin.findAll()
         getAllProduct = getAllProduct.map(e => {
             return {
                 productName: e.productName,
@@ -119,7 +118,7 @@ const GET_ALL_PRODUCT = async (req, res) =>{
 }
 
 module.exports = {
-    ADD_PRODUCT,
+    ADD_COIN,
     DELETE_PRODUCT,
     UPDATE_PRODUCT,
     SEARCH_PRODUCT_BY_NAME,

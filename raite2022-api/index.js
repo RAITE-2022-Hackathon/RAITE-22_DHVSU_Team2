@@ -11,10 +11,10 @@ const PORT = process.env.PORT || 5000;
 
 //routes
 const user = require("./src/routes/user/user");
-const product = require("./src/routes/product/product");
+const coin = require("./src/routes/coin/coin");
 
 app.use("/api/user", user);
-app.use("/api/product", product);
+app.use("/api/coin", coin);
 
 
 
