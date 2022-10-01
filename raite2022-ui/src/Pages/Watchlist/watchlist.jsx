@@ -16,40 +16,29 @@ const watchlist = () => {
     const [ coinsData, setCoinsData ] = useState([])
     const [ currentPage, SetCurrentPage ] = useState(1)
     const [ postPerPage, setPostsPerPage] = useState(8)
-    const [ watchlist, setWatchlist] = useState([])
-    const [ outputData, setOutputData ] = useState([])
+
 
     useEffect(() => {
         (async () => {
             const data = await getCoins()
             setCoinsData(data)
-        })();
-        (async () => {
-            const data = await getWatchlist(id)
-            setWatchlist(data)
-        })();
+        })()
     },[])
 
-    useEffect(() => {
-        console.log(watchlist.data.coinName)
-        setOutputData(coinsData.filter((coins) => watchlist.includes(coins)))
-    },[watchlist])
-
-
-
-    // const indexOfLastData = currentPage * postPerPage
-    // const indexOfFirstData = indexOfLastData - postPerPage
-    // const currentData = outputData.slice(indexOfFirstData, indexOfLastData)
-    // const paginate = (pageNumber) =>{
-    //     SetCurrentPage(pageNumber)
-    // }
+    const indexOfLastData = currentPage * postPerPage
+    const indexOfFirstData = indexOfLastData - postPerPage
+    const currentData = coinsData.slice(indexOfFirstData, indexOfLastData)
+    const paginate = (pageNumber) =>{
+        SetCurrentPage(currentData)
+    }
 
   return (
     <>
     <NavigationBar/>
     <Container className='w-75 mx-auto'>
-        <CryptoList coinsData={outputData}/>
-        {/* <Paginate dataPerPage={postPerPage} totalData={coinsData.length} paginate={paginate}/> */}
+        <CryptoList coinsData={currentData}/>
+        <Paginate dataPerPage={postPerPage} totalData={coinsData.length} paginate={paginate}/>
+        
     </Container>
     </>
   )
