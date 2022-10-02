@@ -31,7 +31,7 @@ const dashboard = () => {
         SetCurrentPage(pageNumber)
     }
 
-  return (
+  return ( 
     <>
     <NavigationBar/>
     <Container className='w-75 mx-auto'>

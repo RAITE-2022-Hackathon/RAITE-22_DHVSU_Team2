@@ -28,6 +28,7 @@ const watchlist = () => {
     const indexOfLastData = currentPage * postPerPage
     const indexOfFirstData = indexOfLastData - postPerPage
     const currentData = coinsData.slice(indexOfFirstData, indexOfLastData)
+    
     const paginate = (pageNumber) =>{
         SetCurrentPage(currentData)
     }

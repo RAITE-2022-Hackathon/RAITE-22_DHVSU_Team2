@@ -12,6 +12,7 @@ import LandingPage from './Pages/Landing Page/landingPage';
 import CoinPage from './Pages/Coin Page/coinPage'
 import Home from './Pages/Home/home'
 import WatchList from './Pages/Watchlist/watchlist'
+
 function App() {
   const [ user, setUser ] =useState(localStorage.token ? localStorage.token : null)
   return (
@@ -39,11 +40,6 @@ function App() {
         
       </>
       }
-    {/* <Dashboard/> */}
-    {/* <RegisterPage/> */}
-    {/* <LoginPage setUser={setUser}/> */}
-    
-    
     </div>
   );
 }
